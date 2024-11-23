@@ -133,8 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-  - Hi
-  - Nerd
+  - 'We are the knights of warlog we protect this villiage '
 --- !u!61 &8160873800085650376
 BoxCollider2D:
   m_ObjectHideFlags: 0
