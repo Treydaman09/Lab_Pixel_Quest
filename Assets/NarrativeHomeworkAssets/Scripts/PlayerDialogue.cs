@@ -11,6 +11,9 @@ public class PlayerDialogue : MonoBehaviour
     private GameObject _talkPanel;
     private TextMeshProUGUI _talkText;
     private int _talkIndex = 0;
+    public SpriteRenderer holdingObject; 
+    public bool canPickUp = false;
+    private GameObject pickUpItem; 
 
     private void Start()
     {
@@ -29,6 +32,13 @@ public class PlayerDialogue : MonoBehaviour
             {
                 isSpeaking = false;
                 _talkPanel.SetActive(false);
+                if (canPickUp)
+                {
+                    holdingObject.sprite = pickUpItem.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite;
+                    Destroy(pickUpItem);
+                    canPickUp = false;
+                    return;
+                }
             }
             else
             {
@@ -59,5 +69,25 @@ public class PlayerDialogue : MonoBehaviour
     {
         dialogue.Clear();
         dialogue.AddRange(newDialogue);
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "PickUp")
+        {
+            canPickUp = true;
+            pickUpItem = collision.transform.gameObject;
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        {
+            if (collision.tag == "PickUp")
+            {
+                canPickUp = false;
+                pickUpItem = null;
+            }
+        }
     }
 }
